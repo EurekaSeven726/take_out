@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+  #应用的名称
+spring:
+  application:
+    #名字为外卖
+    name: take_out
+    #数据源配置
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #因为是mysql8，之前把3306给mysql5.7了，所以这里是13306
+      url: jdbc:mysql://localhost:13306/takeout?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: eureka
+      password: root
+mybatis-plus:
+  configuration:
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+    #这样Li_zheng可以映射到数据库lizheng这样
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
