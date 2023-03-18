@@ -3,6 +3,7 @@ package com.lizheng.takeout;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * @Author ZhengWen
@@ -12,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 //slf4j查看日志方便
 @SpringBootApplication
+@ServletComponentScan
+//扫描filter过滤器用
 public class TakeOutApplication {
     public static void main(String[] args) {
         SpringApplication.run(TakeOutApplication.class,args);
