@@ -9,4 +9,5 @@ import com.lizheng.takeout.entity.Category;
  * @Version 1.0
  */
 public interface CategoryService extends IService<Category> {
+    public void remove(Long id);
 }
