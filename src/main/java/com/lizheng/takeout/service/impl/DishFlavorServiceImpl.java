@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
  * @Date 2023/3/18 22:51
  * @Version 1.0
  */
-public class DishFlavorServicelmpl {
-    @Service
-    public class DishFlavorServiceImpl extends ServiceImpl<DishFlavorMapper, DishFlavor> implements DishFlavorService {
-    }
+@Service
+public class DishFlavorServiceImpl extends ServiceImpl<DishFlavorMapper, DishFlavor>implements DishFlavorService {
 }
