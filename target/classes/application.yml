@@ -25,3 +25,7 @@ mybatis-plus:
       id-type: ASSIGN_ID
 takeout:
   path: D:\img\
+  spring:
+    http:
+      multipart:
+        max-file-size=10mb:

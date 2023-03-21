@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @Author ZhengWen
@@ -14,6 +15,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 //slf4j查看日志方便
 @SpringBootApplication
 @ServletComponentScan
+@EnableTransactionManagement
 //扫描filter过滤器用
 public class TakeOutApplication {
     public static void main(String[] args) {

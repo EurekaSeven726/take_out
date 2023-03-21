@@ -6,8 +6,8 @@
   background-color: #333;
 }
 .login-box {
-  width: 1000px;
-  height: 474.38px;
+  width: 1800px;
+  height: 800px;
   border-radius: 8px;
   display: flex;
 }
@@ -79,7 +79,7 @@
   font-weight: 500;
   font-size: 14px;
   border: 0;
-  background-color: #ffc200;
+  background-color: #79c2c9;
 }
 .login-btn:hover,
 .login-btn:focus {
