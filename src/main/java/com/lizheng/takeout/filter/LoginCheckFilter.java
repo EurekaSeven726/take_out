@@ -18,7 +18,8 @@ import java.io.IOException;
  * @Date 2023/3/12 22:02
  * @Version 1.0
  */
-@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
+@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/backend/**")
+//@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
 //所有的页面都要检查捏
 @Slf4j
 public class LoginCheckFilter implements Filter {
@@ -37,14 +38,28 @@ public class LoginCheckFilter implements Filter {
         //定义不需要处理的请求路径
         long id = Thread.currentThread().getId() ;
         log.info("线程id:{}" ,id);
-
         String[] urls = new String[]{
                 "/employee/login",
                 "/employee/logout",
                 "/backend/**",
                 "/front/**",
-                "/common/**"
+                "/common/**",
+                "/user/sendMsg",
+                // 发送登录验证码
+                "/user/login",
+                 //用户登录
         };
+//        String[] urls = new String[]{
+//                "/employee/login",
+//                "/employee/logout",
+//                "/backend/**",
+//                "/front/**",
+//                "/common/**",
+//                "/user/sendMsg",
+//                // 发送登录验证码
+//                "/user/login",
+//                // 用户登录
+//        };
 
         //2、判断本次请求是否需要处理
         boolean check = check(urls, requestURI);
@@ -72,6 +87,18 @@ public class LoginCheckFilter implements Filter {
         //5、如果未登录则返回未登录结果，通过输出流方式向客户端页面响应数据
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
         return;
+        // 6.如果需要处理，判断C端用户是否登录
+//        if (request.getSession().getAttribute("user") != null) {
+//            // 能进入说明已经登录，直接放行
+//            Long userId = (Long) request.getSession().getAttribute("user");
+//            log.info("手机用户{}已登录", userId);
+//            // 把当前登录用户的ID保存到ThreadLocal中
+//            BaseContext.setCurrentUserId(userId);
+//            // 放行
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+
     }
     /**
      * 路径匹配，检查本次请求是否需要放行
@@ -89,5 +116,6 @@ public class LoginCheckFilter implements Filter {
         }
         return false;
     }
+
 
 }

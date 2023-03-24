@@ -14,6 +14,14 @@ spring:
       url: jdbc:mysql://localhost:13306/takeout?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: eureka
+  mail:
+    host: smtp.qq.com
+    #发送验证码的邮箱
+    username: 1070689340@qq.com
+    # 你的QQ邮箱授权码
+    password: nzuzocjfltotbeha
+    port: 587
+    default-encoding: UTF-8
 mybatis-plus:
   configuration:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
