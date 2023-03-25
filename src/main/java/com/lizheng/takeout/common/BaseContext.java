@@ -14,7 +14,6 @@ public class BaseContext {
     public static void setCurrentId(Long id){
         threadLocal.set(id);
     }
-
     public static Long getCurrentId(){
         return threadLocal.get();
     }

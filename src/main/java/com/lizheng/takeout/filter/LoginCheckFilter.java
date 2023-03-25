@@ -18,8 +18,7 @@ import java.io.IOException;
  * @Date 2023/3/12 22:02
  * @Version 1.0
  */
-@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/backend/**")
-//@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
+@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
 //所有的页面都要检查捏
 @Slf4j
 public class LoginCheckFilter implements Filter {
@@ -30,10 +29,8 @@ public class LoginCheckFilter implements Filter {
         HttpServletRequest request=(HttpServletRequest) servletRequest;
         //向下转型
         HttpServletResponse response=(HttpServletResponse) servletResponse;
-
         //1、获取本次请求的URI
         String requestURI = request.getRequestURI();// /backend/index.html
-
         log.info("拦截到请求：{}",requestURI);
         //定义不需要处理的请求路径
         long id = Thread.currentThread().getId() ;
@@ -45,9 +42,7 @@ public class LoginCheckFilter implements Filter {
                 "/front/**",
                 "/common/**",
                 "/user/sendMsg",
-                // 发送登录验证码
-                "/user/login",
-                 //用户登录
+                "/user/login"
         };
 //        String[] urls = new String[]{
 //                "/employee/login",
@@ -78,6 +73,17 @@ public class LoginCheckFilter implements Filter {
             BaseContext.setCurrentId(empId);
             filterChain.doFilter(request,response);
             return;
+        }
+        //4.2 判断登陆状态，如果已登陆，则直接放行
+        if (request.getSession().getAttribute("user")!=null){
+            log.info("监测到已登陆,id为:{}",request.getSession().getAttribute("user"));
+
+            //调用我们基于ThreadLocal的工具类，将用户id存储到线程中，方便在自动填充时取出用户id
+            Long employeeId = (Long) request.getSession().getAttribute("user");
+            BaseContext.setCurrentId(employeeId);
+
+            filterChain.doFilter(request,response); //放行
+            return; //若放行 后面代码无需执行 直接return
         }
 //        log.info("拦截到请求:{}",request.getRequestURI());
 //        //{}在这里算是一个占位符,后面对应的内容会到这里面

@@ -33,18 +33,18 @@ public class UserController {
     public R<String> sendMsg(HttpSession session, @RequestBody User user){
         //获取邮箱号
         //相当于发送短信定义的String to
-        String email = user.getPhone();
+        String phone = user.getPhone();
         String subject = "好好食外卖";
         //StringUtils.isNotEmpty字符串非空判断
-        if (StringUtils.isNotEmpty(email)) {
+        if (StringUtils.isNotEmpty(phone)) {
             //发送一个四位数的验证码,把验证码变成String类型
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
             String text = "【好好食外卖】您好，您的登录验证码为：" + code + "，请尽快登录";
             log.info("验证码为：" + code);
             //发送短信
-            userService.sendMsg(email,subject,text);
+            userService.sendMsg(phone,subject,text);
             //将验证码保存到session当中
-            session.setAttribute(email,code);
+            session.setAttribute(phone,code);
             return R.success("验证码发送成功");
         }
         return R.error("验证码发送异常，请重新发送");
