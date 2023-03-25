@@ -9,4 +9,5 @@ import com.lizheng.takeout.entity.Orders;
  * @Version 1.0
  */
 public interface OrderService extends IService<Orders> {
+    public void submit(Orders orders);
 }
