@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -102,4 +105,41 @@ public class AddressBookController {
         //SQL:select * from address_book where user_id = ? order by update_time desc
         return R.success(addressBookService.list(queryWrapper));
     }
+    /**
+     * 删除地址
+     * @param ids
+     * @param session
+     * @return
+     */
+    @DeleteMapping()
+    public R<String> addressBook(@PathParam("ids") Long ids, HttpSession session){
+        //通过ids删除地址
+        LambdaQueryWrapper<AddressBook> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(AddressBook::getId, ids)
+                .eq(AddressBook::getUserId, (Long)session.getAttribute("user"));
+        addressBookService.remove(queryWrapper);
+        return R.success("删除成功");
+    }
+    /**
+     * 修改地址——回显数据
+     * @param id
+     * @return
+     */
+    /**
+     * 修改地址——保存
+     * @param addressBook
+     * @param session
+     * @return
+     */
+    @PutMapping
+    public R<String> addressBookupdate(@RequestBody AddressBook addressBook, HttpSession session){
+        //设置修改时间
+        addressBook.setUpdateTime(LocalDateTime.now());
+        //设置修改人
+        addressBook.setUpdateUser((Long)session.getAttribute("user"));
+        addressBookService.updateById(addressBook);
+        return R.success("修改成功");
+    }
+
+
 }

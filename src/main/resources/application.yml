@@ -3,6 +3,10 @@ server:
 
   #应用的名称
 spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   application:
     #名字为外卖
     name: take_out

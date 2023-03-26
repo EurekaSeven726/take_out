@@ -17,4 +17,7 @@ public class BaseContext {
     public static Long getCurrentId(){
         return threadLocal.get();
     }
+    public  static Long getThreadLocalId(){
+        return threadLocal.get();
+    }
 }

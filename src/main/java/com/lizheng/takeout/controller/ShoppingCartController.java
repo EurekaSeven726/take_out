@@ -78,6 +78,11 @@ public class ShoppingCartController {
         shoppingCartService.remove(queryWrapper);
         return R.success("清空购物车成功");
     }
+    /**
+     * 客户端的套餐或者是菜品数量减少设置
+     * 没必要设置返回值
+     * @param shoppingCart
+     */
     @PostMapping("/sub")
     public R<ShoppingCart> sub(@RequestBody ShoppingCart shoppingCart){
         Long setmealId = shoppingCart.getSetmealId();

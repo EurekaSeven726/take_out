@@ -2,6 +2,8 @@ package com.lizheng.takeout.dto;
 import com.lizheng.takeout.entity.OrderDetail;
 import com.lizheng.takeout.entity.Orders;
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,8 +17,8 @@ public class OrdersDto extends Orders {
 
     private String consignee;
 
-    private List<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetails=new ArrayList<>();
 
     private int sumNum;
-	
+
 }

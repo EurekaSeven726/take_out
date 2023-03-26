@@ -33,8 +33,8 @@ public class LoginCheckFilter implements Filter {
         String requestURI = request.getRequestURI();// /backend/index.html
         log.info("拦截到请求：{}",requestURI);
         //定义不需要处理的请求路径
-        long id = Thread.currentThread().getId() ;
-        log.info("线程id:{}" ,id);
+//        long id = Thread.currentThread().getId() ;
+//        log.info("线程id:{}" ,id);
         String[] urls = new String[]{
                 "/employee/login",
                 "/employee/logout",
@@ -44,17 +44,6 @@ public class LoginCheckFilter implements Filter {
                 "/user/sendMsg",
                 "/user/login"
         };
-//        String[] urls = new String[]{
-//                "/employee/login",
-//                "/employee/logout",
-//                "/backend/**",
-//                "/front/**",
-//                "/common/**",
-//                "/user/sendMsg",
-//                // 发送登录验证码
-//                "/user/login",
-//                // 用户登录
-//        };
 
         //2、判断本次请求是否需要处理
         boolean check = check(urls, requestURI);
@@ -69,6 +58,7 @@ public class LoginCheckFilter implements Filter {
         //4、判断登录状态，如果已登录，则直接放行
         if(request.getSession().getAttribute("employee") != null){
             log.info("用户已登录，用户id为：{}",request.getSession().getAttribute("employee"));
+            //把用户id存储到本地的threadLocal
             Long empId= (Long) request.getSession().getAttribute("employee");
             BaseContext.setCurrentId(empId);
             filterChain.doFilter(request,response);
@@ -77,11 +67,9 @@ public class LoginCheckFilter implements Filter {
         //4.2 判断登陆状态，如果已登陆，则直接放行
         if (request.getSession().getAttribute("user")!=null){
             log.info("监测到已登陆,id为:{}",request.getSession().getAttribute("user"));
-
             //调用我们基于ThreadLocal的工具类，将用户id存储到线程中，方便在自动填充时取出用户id
-            Long employeeId = (Long) request.getSession().getAttribute("user");
-            BaseContext.setCurrentId(employeeId);
-
+            Long userId  = (Long) request.getSession().getAttribute("user");
+            BaseContext.setCurrentId(userId );
             filterChain.doFilter(request,response); //放行
             return; //若放行 后面代码无需执行 直接return
         }
@@ -114,7 +102,7 @@ public class LoginCheckFilter implements Filter {
      */
     public boolean check(String[] urls,String requestURI){
         for (String url : urls) {
-            //遍历url
+            //把浏览器发过来的请求和我们定义的不拦截的url做比较，匹配则放行
             boolean match = PATH_MATCHER.match(url, requestURI);
             if(match){
                 return true;
